@@ -1,0 +1,22 @@
+precision mediump float;
+   
+   attribute vec3 vertices;
+   attribute vec2 tex_coords;
+   attribute vec3 normals;
+
+   varying vec4 frag_colour;
+   varying vec2 tex_coords0;
+   varying vec3 normal0;
+   varying vec3 world_pos;
+
+   uniform mat4 world;
+   uniform mat4 view;
+   uniform mat4 projection;
+
+   void main() {
+      frag_colour = clamp(vec4(vertices,1.0), 0.0, 1.0);
+      tex_coords0 = tex_coords;
+      normal0 = (world * vec4(normals, 0.0)).xyz;
+      world_pos = (world * vec4(vertices, 1.0)).xyz;
+      gl_Position = projection * view * world * vec4(vertices, 1.0);
+   }
